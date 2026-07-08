@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>Tiny Second-hand Shopping Platform</title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
+<%- include('partials/head', { title: 'Tiny Second-hand Shopping Platform' }) %>
 <body>
 <%- include('partials/nav') %>
-<h1>Tiny Second-hand Shopping Platform</h1>
-<% if (currentUser) { %>
-  <p>환영합니다, <%= currentUser.username %>님. <a href="/products">상품 목록 보러가기</a></p>
-<% } else { %>
-  <p>중고거래를 시작하려면 로그인하거나 회원가입하세요.</p>
-<% } %>
-</body>
-</html>
+<div class="container">
+  <h1>Tiny Second-hand Shopping Platform</h1>
+  <% if (currentUser) { %>
+    <p>환영합니다, <%= currentUser.username %>님. <a href="/products">상품 목록 보러가기</a></p>
+  <% } else { %>
+    <p>중고거래를 시작하려면 로그인하거나 회원가입하세요.</p>
+  <% } %>
+</div>
+<%- include('partials/foot') %>

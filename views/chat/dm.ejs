@@ -1,24 +1,19 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title><%= otherUser.username %>님과의 대화</title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
+<%- include('../partials/head', { title: otherUser.username + '님과의 대화' }) %>
 <body data-current-user-id="<%= currentUser.id %>" data-other-user-id="<%= otherUser.id %>">
 <%- include('../partials/nav') %>
-<p><a href="/chat">← 대화 목록</a></p>
-<h1><%= otherUser.username %>님과의 대화</h1>
-<ul id="messages">
-  <% messages.forEach(function (m) { %>
-    <li><strong><%= m.sender_username %>:</strong> <%= m.content %></li>
-  <% }) %>
-</ul>
-<form id="chat-form">
-  <input type="text" id="chat-input" maxlength="1000" autocomplete="off" required>
-  <button type="submit">전송</button>
-</form>
+<div class="container" style="max-width: 640px;">
+  <p><a href="/chat">&larr; 대화 목록</a></p>
+  <h1><%= otherUser.username %>님과의 대화</h1>
+  <ul id="messages" class="list-group mb-3" style="max-height: 400px; overflow-y: auto;">
+    <% messages.forEach(function (m) { %>
+      <li class="list-group-item"><strong><%= m.sender_username %>:</strong> <%= m.content %></li>
+    <% }) %>
+  </ul>
+  <form id="chat-form" class="input-group">
+    <input type="text" id="chat-input" class="form-control" maxlength="1000" autocomplete="off" required>
+    <button type="submit" class="btn btn-primary">전송</button>
+  </form>
+</div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/chat-dm.js"></script>
-</body>
-</html>
+<%- include('../partials/foot') %>

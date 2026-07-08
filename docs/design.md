@@ -4,6 +4,8 @@
 
 - **Backend**: Node.js + Express
 - **View**: EJS (서버 렌더링, `<%= %>` 자동 이스케이프)
+- **스타일링**: Bootstrap 5 (자체 호스팅 — CDN은 CSP `style-src`/`script-src 'self'`에
+  막혀 사용하지 않음, `security-fixes.md` #8 참고)
 - **DB**: SQLite (`better-sqlite3`, 동기 드라이버 — 트랜잭션 원자성 확보에 유리)
 - **인증**: `express-session`(세션) + `bcryptjs`(비밀번호 해시)
 - **실시간**: `socket.io` (전체 채팅 + 1:1 채팅)

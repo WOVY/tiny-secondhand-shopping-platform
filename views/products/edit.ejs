@@ -1,31 +1,40 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>상품 수정</title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
+<%- include('../partials/head', { title: '상품 수정' }) %>
 <body>
 <%- include('../partials/nav') %>
-<h1>상품 수정</h1>
-<% if (errors && errors.length) { %>
-  <ul class="errors">
-    <% errors.forEach(function (e) { %><li><%= e.msg %></li><% }) %>
-  </ul>
-<% } %>
-<form method="POST" action="/products/<%= product.id %>/edit" enctype="multipart/form-data">
-  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-  <label>제목 <input type="text" name="title" maxlength="100" value="<%= product.title %>" required></label><br>
-  <label>설명 <textarea name="description" maxlength="2000"><%= product.description %></textarea></label><br>
-  <label>가격(원) <input type="number" name="price" min="0" value="<%= product.price %>" required></label><br>
-  <label>사진 교체(선택) <input type="file" name="image" accept="image/png,image/jpeg,image/webp"></label><br>
-  <button type="submit">저장</button>
-</form>
+<div class="container" style="max-width: 640px;">
+  <h1>상품 수정</h1>
+  <% if (errors && errors.length) { %>
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        <% errors.forEach(function (e) { %><li><%= e.msg %></li><% }) %>
+      </ul>
+    </div>
+  <% } %>
+  <form method="POST" action="/products/<%= product.id %>/edit" enctype="multipart/form-data" class="mb-4">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <div class="mb-3">
+      <label class="form-label">제목</label>
+      <input type="text" name="title" class="form-control" maxlength="100" value="<%= product.title %>" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">설명</label>
+      <textarea name="description" class="form-control" maxlength="2000"><%= product.description %></textarea>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">가격(원)</label>
+      <input type="number" name="price" class="form-control" min="0" value="<%= product.price %>" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">사진 교체(선택)</label>
+      <input type="file" name="image" class="form-control" accept="image/png,image/jpeg,image/webp">
+    </div>
+    <button type="submit" class="btn btn-primary">저장</button>
+  </form>
 
-<form method="POST" action="/products/<%= product.id %>/delete" data-confirm="삭제하시겠습니까?">
-  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-  <button type="submit">삭제</button>
-</form>
-<script src="/js/confirm-forms.js"></script>
-</body>
-</html>
+  <form method="POST" action="/products/<%= product.id %>/delete" data-confirm="삭제하시겠습니까?">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <button type="submit" class="btn btn-danger">삭제</button>
+  </form>
+  <script src="/js/confirm-forms.js"></script>
+</div>
+<%- include('../partials/foot') %>

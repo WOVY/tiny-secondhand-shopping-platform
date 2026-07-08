@@ -1,38 +1,31 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>전체 채팅</title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
+<%- include('../partials/head', { title: '전체 채팅' }) %>
 <body data-current-user-id="<%= currentUser.id %>">
 <%- include('../partials/nav') %>
-<h1>전체 채팅</h1>
+<div class="container" style="max-width: 640px;">
+  <h1>전체 채팅</h1>
 
-<h2>1:1 대화</h2>
-<ul>
-  <% conversations.forEach(function (c) { %>
-    <li>
-      <a href="/chat/<%= c.otherId %>"><%= c.otherUser.username %></a>
-      — <%= c.lastContent %>
-    </li>
-  <% }) %>
-  <% if (conversations.length === 0) { %><li>아직 1:1 대화가 없습니다.</li><% } %>
-</ul>
+  <h2>1:1 대화</h2>
+  <ul class="list-group mb-4">
+    <% conversations.forEach(function (c) { %>
+      <li class="list-group-item">
+        <a href="/chat/<%= c.otherId %>"><%= c.otherUser.username %></a>
+        &mdash; <%= c.lastContent %>
+      </li>
+    <% }) %>
+    <% if (conversations.length === 0) { %><li class="list-group-item">아직 1:1 대화가 없습니다.</li><% } %>
+  </ul>
 
-<hr>
-
-<h2>전체 채팅 메시지</h2>
-<ul id="messages">
-  <% messages.forEach(function (m) { %>
-    <li><strong><%= m.sender_username %>:</strong> <%= m.content %></li>
-  <% }) %>
-</ul>
-<form id="chat-form">
-  <input type="text" id="chat-input" maxlength="1000" autocomplete="off" required>
-  <button type="submit">전송</button>
-</form>
+  <h2>전체 채팅 메시지</h2>
+  <ul id="messages" class="list-group mb-3" style="max-height: 400px; overflow-y: auto;">
+    <% messages.forEach(function (m) { %>
+      <li class="list-group-item"><strong><%= m.sender_username %>:</strong> <%= m.content %></li>
+    <% }) %>
+  </ul>
+  <form id="chat-form" class="input-group">
+    <input type="text" id="chat-input" class="form-control" maxlength="1000" autocomplete="off" required>
+    <button type="submit" class="btn btn-primary">전송</button>
+  </form>
+</div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/chat-global.js"></script>
-</body>
-</html>
+<%- include('../partials/foot') %>

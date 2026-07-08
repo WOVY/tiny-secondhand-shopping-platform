@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>403 Forbidden</title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
+<%- include('partials/head', { title: '403 Forbidden' }) %>
 <body>
+<div class="container text-center mt-5">
   <h1>요청이 거부되었습니다</h1>
   <p>페이지를 새로고침한 뒤 다시 시도해주세요.</p>
-  <a href="/">홈으로</a>
-</body>
-</html>
+  <a class="btn btn-primary" href="/">홈으로</a>
+</div>
+<%- include('partials/foot') %>

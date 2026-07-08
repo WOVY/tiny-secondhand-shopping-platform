@@ -1,40 +1,43 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>송금</title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
+<%- include('partials/head', { title: '송금' }) %>
 <body>
 <%- include('partials/nav') %>
-<h1>송금</h1>
-<p>내 잔액: <%= balance %>P</p>
-<% if (success) { %><p class="success">송금이 완료되었습니다.</p><% } %>
-<% if (errors && errors.length) { %>
-  <ul class="errors">
-    <% errors.forEach(function (e) { %><li><%= e.msg %></li><% }) %>
-  </ul>
-<% } %>
-<form method="POST" action="/transfer">
-  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-  <label>받는 사람 아이디 <input type="text" name="toUsername" value="<%= values.toUsername || '' %>" required></label><br>
-  <label>금액(P) <input type="number" name="amount" min="1" value="<%= values.amount || '' %>" required></label><br>
-  <button type="submit">송금</button>
-</form>
+<div class="container" style="max-width: 640px;">
+  <h1>송금</h1>
+  <p>내 잔액: <strong><%= balance %>P</strong></p>
+  <% if (success) { %><div class="alert alert-success">송금이 완료되었습니다.</div><% } %>
+  <% if (errors && errors.length) { %>
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        <% errors.forEach(function (e) { %><li><%= e.msg %></li><% }) %>
+      </ul>
+    </div>
+  <% } %>
+  <form method="POST" action="/transfer" class="mb-4">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <div class="mb-3">
+      <label class="form-label">받는 사람 아이디</label>
+      <input type="text" name="toUsername" class="form-control" value="<%= values.toUsername || '' %>" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">금액(P)</label>
+      <input type="number" name="amount" class="form-control" min="1" value="<%= values.amount || '' %>" required>
+    </div>
+    <button type="submit" class="btn btn-primary">송금</button>
+  </form>
 
-<h2>거래 내역</h2>
-<ul>
-  <% transactions.forEach(function (t) { %>
-    <li>
-      <%= t.created_at %> -
-      <% if (t.from_user_id === currentUser.id) { %>
-        <%= t.to_username %>님에게 <%= t.amount %>P 송금
-      <% } else { %>
-        <%= t.from_username %>님에게서 <%= t.amount %>P 수신
-      <% } %>
-    </li>
-  <% }) %>
-  <% if (transactions.length === 0) { %><li>거래 내역이 없습니다.</li><% } %>
-</ul>
-</body>
-</html>
+  <h2>거래 내역</h2>
+  <ul class="list-group">
+    <% transactions.forEach(function (t) { %>
+      <li class="list-group-item">
+        <%= t.created_at %> -
+        <% if (t.from_user_id === currentUser.id) { %>
+          <%= t.to_username %>님에게 <%= t.amount %>P 송금
+        <% } else { %>
+          <%= t.from_username %>님에게서 <%= t.amount %>P 수신
+        <% } %>
+      </li>
+    <% }) %>
+    <% if (transactions.length === 0) { %><li class="list-group-item">거래 내역이 없습니다.</li><% } %>
+  </ul>
+</div>
+<%- include('partials/foot') %>

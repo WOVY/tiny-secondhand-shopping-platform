@@ -6,6 +6,7 @@
 
   function appendMessage(m) {
     var li = document.createElement('li');
+    li.className = 'list-group-item';
     var strong = document.createElement('strong');
     strong.textContent = m.senderUsername + ': ';
     li.appendChild(strong);
