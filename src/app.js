@@ -2,10 +2,9 @@ const path = require('path');
 const express = require('express');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
 
-const config = require('./config/env');
 const { doubleCsrfProtection, generateToken } = require('./middleware/csrf');
+const sessionMiddleware = require('./middleware/session');
 const userModel = require('./models/user');
 
 const app = express();
@@ -19,19 +18,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.use(cookieParser());
-app.use(
-  session({
-    secret: config.sessionSecret,
-    resave: false,
-    // CSRF 토큰이 세션 id에 묶이므로, 세션 쿠키가 로그인 전에도 발급되어야 함
-    saveUninitialized: true,
-    cookie: {
-      httpOnly: true,
-      sameSite: 'lax',
-      secure: config.isProduction,
-    },
-  })
-);
+app.use(sessionMiddleware);
 
 app.use(doubleCsrfProtection);
 app.use((req, res, next) => {
@@ -56,6 +43,7 @@ app.use(require('./routes/auth'));
 app.use(require('./routes/profile'));
 app.use(require('./routes/products'));
 app.use(require('./routes/report'));
+app.use(require('./routes/chat'));
 
 app.get('/', (req, res) => {
   res.render('index');
