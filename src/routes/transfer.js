@@ -29,7 +29,7 @@ router.post(
     body('toUsername').trim().notEmpty().withMessage('받는 사람 아이디를 입력하세요.'),
     body('amount')
       .isInt({ min: 1, max: 100000000 })
-      .withMessage('금액은 1 이상 정수여야 합니다.')
+      .withMessage('금액은 1 이상 100,000,000 이하의 정수여야 합니다.')
       .toInt(),
   ],
   (req, res) => {
