@@ -28,6 +28,16 @@ function updateStatus(id, status) {
   db.prepare('UPDATE users SET status = ? WHERE id = ?').run(status, id);
 }
 
+function listAll() {
+  return db
+    .prepare('SELECT id, username, role, status, balance, created_at FROM users ORDER BY id')
+    .all();
+}
+
+function remove(id) {
+  db.prepare('DELETE FROM users WHERE id = ?').run(id);
+}
+
 module.exports = {
   findByUsername,
   findById,
@@ -35,4 +45,6 @@ module.exports = {
   updateBio,
   updatePassword,
   updateStatus,
+  listAll,
+  remove,
 };
