@@ -44,6 +44,17 @@ app.use(
   })
 );
 
+// express.urlencoded/json은 multipart/form-data 바디를 파싱하지 않는다. 이미지 업로드가
+// 있는 두 라우트는 폼이 항상 multipart이므로, CSRF 미들웨어가 req.body._csrf를 읽기 전에
+// multer로 먼저 바디를 파싱해야 한다 (그대로 두면 req.body가 항상 비어있어 정상적인
+// 요청도 CSRF 검증에서 403으로 거부된다).
+app.post(['/products/new', '/products/:id/edit'], (req, res, next) => {
+  // 로그인하지 않은 요청은 라우트의 requireAuth에서 어차피 거부되므로, 굳이 파일을
+  // 디스크에 먼저 써가며 파싱하지 않는다 (익명 사용자의 업로드 자원 낭비 방지).
+  if (!req.session || !req.session.userId) return next();
+  return require('./middleware/upload').handleImageUpload(req, res, next);
+});
+
 app.use(doubleCsrfProtection);
 app.use((req, res, next) => {
   // 로그인/로그아웃 시 세션이 재발급되면 기존 csrf-token 쿠키는 더 이상 유효하지 않으므로

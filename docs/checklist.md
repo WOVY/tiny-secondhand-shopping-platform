@@ -34,3 +34,4 @@
 | 27 | 관리자 계정 | 초기 관리자 비밀번호 하드코딩 금지 (환경변수 필수) | `src/config/seed.js` | ✅ |
 | 28 | 리버스 프록시 | trust proxy는 명시적 옵트인일 때만 활성화 | `TRUST_PROXY` env (`src/config/env.js`) | ✅ |
 | 29 | 의존성 | 알려진 취약점 있는 패키지 회피/상향 (multer 1.x→2.x) | `npm audit` | ✅ |
+| 30 | CSRF | 멀티파트(이미지 업로드) 폼도 CSRF 토큰이 실제로 검증됨 (파싱 순서 버그 수정 후) | `src/app.js` (`security-fixes.md` #7) | ✅ |
