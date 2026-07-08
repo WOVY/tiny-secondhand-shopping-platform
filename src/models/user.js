@@ -23,4 +23,15 @@ function updatePassword(id, passwordHash) {
   db.prepare('UPDATE users SET password_hash = ? WHERE id = ?').run(passwordHash, id);
 }
 
-module.exports = { findByUsername, findById, create, updateBio, updatePassword };
+function updateStatus(id, status) {
+  db.prepare('UPDATE users SET status = ? WHERE id = ?').run(status, id);
+}
+
+module.exports = {
+  findByUsername,
+  findById,
+  create,
+  updateBio,
+  updatePassword,
+  updateStatus,
+};
