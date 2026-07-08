@@ -30,10 +30,20 @@ router.get(
     query('maxPrice').optional({ values: 'falsy' }).isInt({ min: 0 }).toInt(),
   ],
   (req, res) => {
-    const errors = validationResult(req);
+    const invalidFields = new Set(validationResult(req).array().map((e) => e.path));
     const q = (req.query.q || '').toString().slice(0, 100);
-    const minPrice = errors.isEmpty() ? req.query.minPrice : undefined;
-    const maxPrice = errors.isEmpty() ? req.query.maxPrice : undefined;
+    // 검색폼은 항상 minPrice/maxPrice 필드를 함께 제출하므로, 값이 빈 문자열("")인
+    // 경우가 흔하다. 이를 "필터 없음"이 아니라 그대로 SQL에 바인딩하면 better-sqlite3가
+    // ''를 TEXT로 바인딩하고, SQLite 타입 정렬 규칙상 TEXT는 항상 INTEGER보다 크게
+    // 취급되어 `price >= ''` 비교가 항상 거짓이 되는 문제가 있었다.
+    const minPrice =
+      !invalidFields.has('minPrice') && req.query.minPrice !== '' && req.query.minPrice !== undefined
+        ? req.query.minPrice
+        : undefined;
+    const maxPrice =
+      !invalidFields.has('maxPrice') && req.query.maxPrice !== '' && req.query.maxPrice !== undefined
+        ? req.query.maxPrice
+        : undefined;
 
     const products = productModel.list({ q, minPrice, maxPrice });
     res.render('products/index', {
