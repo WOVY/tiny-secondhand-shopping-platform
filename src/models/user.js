@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const { SIGNUP_BONUS_BALANCE } = require('../config/constants');
 
 function findByUsername(username) {
   return db.prepare('SELECT * FROM users WHERE username = ?').get(username);
@@ -10,8 +11,8 @@ function findById(id) {
 
 function create({ username, passwordHash }) {
   const result = db
-    .prepare('INSERT INTO users (username, password_hash) VALUES (?, ?)')
-    .run(username, passwordHash);
+    .prepare('INSERT INTO users (username, password_hash, balance) VALUES (?, ?, ?)')
+    .run(username, passwordHash, SIGNUP_BONUS_BALANCE);
   return findById(result.lastInsertRowid);
 }
 
