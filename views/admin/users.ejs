@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>유저 관리</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%- include('../partials/nav') %>
+<h1>유저 관리</h1>
+<% if (error) { %><p class="errors"><%= error %></p><% } %>
+<table border="1" cellpadding="4">
+  <tr><th>ID</th><th>아이디</th><th>역할</th><th>상태</th><th>잔액</th><th>액션</th></tr>
+  <% users.forEach(function (u) { %>
+    <tr>
+      <td><%= u.id %></td>
+      <td><%= u.username %></td>
+      <td><%= u.role %></td>
+      <td><%= u.status %></td>
+      <td><%= u.balance %></td>
+      <td>
+        <form action="/admin/users/<%= u.id %>/status" method="POST" style="display:inline">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button type="submit"><%= u.status === 'suspended' ? '휴면 해제' : '휴면 처리' %></button>
+        </form>
+        <form action="/admin/users/<%= u.id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('삭제하시겠습니까?');">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button type="submit">삭제</button>
+        </form>
+      </td>
+    </tr>
+  <% }) %>
+</table>
+</body>
+</html>
