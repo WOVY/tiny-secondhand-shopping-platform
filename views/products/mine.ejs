@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>내 상품 관리</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%- include('../partials/nav') %>
+<h1>내 상품 관리</h1>
+<p><a href="/products/new">새 상품 등록</a></p>
+<ul>
+  <% products.forEach(function (p) { %>
+    <li>
+      <a href="/products/<%= p.id %>"><%= p.title %></a>
+      - <%= p.price %>원 - [<%= p.status %>]
+      - <a href="/products/<%= p.id %>/edit">수정</a>
+    </li>
+  <% }) %>
+  <% if (products.length === 0) { %><li>등록한 상품이 없습니다.</li><% } %>
+</ul>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>상품 수정</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%- include('../partials/nav') %>
+<h1>상품 수정</h1>
+<% if (errors && errors.length) { %>
+  <ul class="errors">
+    <% errors.forEach(function (e) { %><li><%= e.msg %></li><% }) %>
+  </ul>
+<% } %>
+<form method="POST" action="/products/<%= product.id %>/edit" enctype="multipart/form-data">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <label>제목 <input type="text" name="title" maxlength="100" value="<%= product.title %>" required></label><br>
+  <label>설명 <textarea name="description" maxlength="2000"><%= product.description %></textarea></label><br>
+  <label>가격(원) <input type="number" name="price" min="0" value="<%= product.price %>" required></label><br>
+  <label>사진 교체(선택) <input type="file" name="image" accept="image/png,image/jpeg,image/webp"></label><br>
+  <button type="submit">저장</button>
+</form>
+
+<form method="POST" action="/products/<%= product.id %>/delete" onsubmit="return confirm('삭제하시겠습니까?');">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <button type="submit">삭제</button>
+</form>
+</body>
+</html>
