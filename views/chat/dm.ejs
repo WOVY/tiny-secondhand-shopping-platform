@@ -7,6 +7,7 @@
 </head>
 <body data-current-user-id="<%= currentUser.id %>" data-other-user-id="<%= otherUser.id %>">
 <%- include('../partials/nav') %>
+<p><a href="/chat">← 대화 목록</a></p>
 <h1><%= otherUser.username %>님과의 대화</h1>
 <ul id="messages">
   <% messages.forEach(function (m) { %>
