@@ -1,0 +1,4 @@
+module.exports = {
+  PRODUCT_REPORT_THRESHOLD: 3,
+  USER_REPORT_THRESHOLD: 5,
+};

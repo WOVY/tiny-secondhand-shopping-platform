@@ -15,6 +15,11 @@
 <p>판매자: <%= product.seller_username %></p>
 <% if (isOwner) { %>
   <p><a href="/products/<%= product.id %>/edit">수정/삭제</a></p>
+<% } else if (currentUser) { %>
+  <p>
+    <a href="/report?type=product&id=<%= product.id %>">상품 신고</a>
+    | <a href="/report?type=user&id=<%= product.seller_id %>">판매자 신고</a>
+  </p>
 <% } %>
 </body>
 </html>
