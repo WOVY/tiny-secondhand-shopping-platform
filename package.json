@@ -2,7 +2,7 @@
   "name": "tiny-secondhand-shopping-platform",
   "version": "0.1.0",
   "private": true,
-  "description": "WHS Secure Coding assignment: a small second-hand marketplace platform",
+  "description": "A small second-hand marketplace platform built with secure coding practices",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
