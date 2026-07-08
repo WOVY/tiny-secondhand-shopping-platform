@@ -11,7 +11,7 @@ labels: enhancement
 
 ## 관련 요구사항
 
-<!-- 슬라이드 요구사항 중 어느 항목에 해당하는지 (그룹 A / 그룹 B), 관련 문서(docs/requirements.md, docs/design.md) 링크 -->
+<!-- 요구사항 중 어느 항목에 해당하는지 (그룹 A / 그룹 B), 관련 문서(docs/requirements.md, docs/design.md) 링크 -->
 
 ## 작업 범위
 
