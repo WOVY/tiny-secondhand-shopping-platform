@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>관리자</title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
+<%- include('../partials/head', { title: '관리자' }) %>
 <body>
 <%- include('../partials/nav') %>
-<h1>관리자 페이지</h1>
-<ul>
-  <li><a href="/admin/users">유저 관리</a></li>
-  <li><a href="/admin/products">상품 관리</a></li>
-  <li><a href="/admin/reports">신고 관리</a></li>
-</ul>
-</body>
-</html>
+<div class="container">
+  <h1>관리자 페이지</h1>
+  <ul class="list-group" style="max-width: 320px;">
+    <li class="list-group-item"><a href="/admin/users">유저 관리</a></li>
+    <li class="list-group-item"><a href="/admin/products">상품 관리</a></li>
+    <li class="list-group-item"><a href="/admin/reports">신고 관리</a></li>
+  </ul>
+</div>
+<%- include('../partials/foot') %>

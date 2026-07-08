@@ -1,26 +1,25 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title><%= product.title %></title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
+<%- include('../partials/head', { title: product.title }) %>
 <body>
 <%- include('../partials/nav') %>
-<h1><%= product.title %></h1>
-<% if (product.status === 'blocked') { %><p class="errors">신고 누적으로 차단된 상품입니다 (본인에게만 표시).</p><% } %>
-<% if (product.image_path) { %><img src="<%= product.image_path %>" alt="상품 이미지" class="product-image"><% } %>
-<p><%= product.description %></p>
-<p>가격: <%= product.price %>원</p>
-<p>판매자: <%= product.seller_username %></p>
-<% if (isOwner) { %>
-  <p><a href="/products/<%= product.id %>/edit">수정/삭제</a></p>
-<% } else if (currentUser) { %>
-  <p>
-    <a href="/chat/<%= product.seller_id %>">판매자와 채팅</a>
-    | <a href="/report?type=product&id=<%= product.id %>">상품 신고</a>
-    | <a href="/report?type=user&id=<%= product.seller_id %>">판매자 신고</a>
-  </p>
-<% } %>
-</body>
-</html>
+<div class="container" style="max-width: 720px;">
+  <h1><%= product.title %></h1>
+  <% if (product.status === 'blocked') { %>
+    <div class="alert alert-danger">신고 누적으로 차단된 상품입니다 (본인에게만 표시).</div>
+  <% } %>
+  <% if (product.image_path) { %>
+    <img src="<%= product.image_path %>" alt="상품 이미지" class="product-image img-fluid rounded mb-3">
+  <% } %>
+  <p><%= product.description %></p>
+  <p><strong>가격:</strong> <%= product.price %>원</p>
+  <p><strong>판매자:</strong> <%= product.seller_username %></p>
+  <% if (isOwner) { %>
+    <a class="btn btn-secondary" href="/products/<%= product.id %>/edit">수정/삭제</a>
+  <% } else if (currentUser) { %>
+    <div class="d-flex gap-2">
+      <a class="btn btn-primary" href="/chat/<%= product.seller_id %>">판매자와 채팅</a>
+      <a class="btn btn-outline-danger" href="/report?type=product&id=<%= product.id %>">상품 신고</a>
+      <a class="btn btn-outline-danger" href="/report?type=user&id=<%= product.seller_id %>">판매자 신고</a>
+    </div>
+  <% } %>
+</div>
+<%- include('../partials/foot') %>

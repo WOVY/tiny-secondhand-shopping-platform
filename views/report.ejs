@@ -1,25 +1,25 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>신고하기</title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
+<%- include('partials/head', { title: '신고하기' }) %>
 <body>
 <%- include('partials/nav') %>
-<h1>신고하기</h1>
-<% if (errors && errors.length) { %>
-  <ul class="errors">
-    <% errors.forEach(function (e) { %><li><%= e.msg %></li><% }) %>
-  </ul>
-<% } %>
-<form method="POST" action="/report">
-  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-  <input type="hidden" name="targetType" value="<%= targetType %>">
-  <input type="hidden" name="targetId" value="<%= targetId %>">
-  <p>신고 대상: <%= targetType === 'product' ? '상품' : '사용자' %> #<%= targetId %></p>
-  <label>신고 사유<br><textarea name="reason" maxlength="500" required></textarea></label><br>
-  <button type="submit">신고 제출</button>
-</form>
-</body>
-</html>
+<div class="container" style="max-width: 640px;">
+  <h1>신고하기</h1>
+  <% if (errors && errors.length) { %>
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        <% errors.forEach(function (e) { %><li><%= e.msg %></li><% }) %>
+      </ul>
+    </div>
+  <% } %>
+  <form method="POST" action="/report">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <input type="hidden" name="targetType" value="<%= targetType %>">
+    <input type="hidden" name="targetId" value="<%= targetId %>">
+    <p>신고 대상: <%= targetType === 'product' ? '상품' : '사용자' %> #<%= targetId %></p>
+    <div class="mb-3">
+      <label class="form-label">신고 사유</label>
+      <textarea name="reason" class="form-control" maxlength="500" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">신고 제출</button>
+  </form>
+</div>
+<%- include('partials/foot') %>

@@ -1,36 +1,37 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>유저 관리</title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
+<%- include('../partials/head', { title: '유저 관리' }) %>
 <body>
 <%- include('../partials/nav') %>
-<h1>유저 관리</h1>
-<% if (error) { %><p class="errors"><%= error %></p><% } %>
-<table border="1" cellpadding="4">
-  <tr><th>ID</th><th>아이디</th><th>역할</th><th>상태</th><th>잔액</th><th>액션</th></tr>
-  <% users.forEach(function (u) { %>
-    <tr>
-      <td><%= u.id %></td>
-      <td><%= u.username %></td>
-      <td><%= u.role %></td>
-      <td><%= u.status %></td>
-      <td><%= u.balance %></td>
-      <td>
-        <form action="/admin/users/<%= u.id %>/status" method="POST" class="inline-form">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <button type="submit"><%= u.status === 'suspended' ? '휴면 해제' : '휴면 처리' %></button>
-        </form>
-        <form action="/admin/users/<%= u.id %>/delete" method="POST" class="inline-form" data-confirm="삭제하시겠습니까?">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <button type="submit">삭제</button>
-        </form>
-      </td>
-    </tr>
-  <% }) %>
-</table>
-<script src="/js/confirm-forms.js"></script>
-</body>
-</html>
+<div class="container">
+  <h1>유저 관리</h1>
+  <% if (error) { %><div class="alert alert-danger"><%= error %></div><% } %>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered align-middle">
+      <thead>
+        <tr><th>ID</th><th>아이디</th><th>역할</th><th>상태</th><th>잔액</th><th>액션</th></tr>
+      </thead>
+      <tbody>
+      <% users.forEach(function (u) { %>
+        <tr>
+          <td><%= u.id %></td>
+          <td><%= u.username %></td>
+          <td><%= u.role %></td>
+          <td><%= u.status %></td>
+          <td><%= u.balance %></td>
+          <td>
+            <form action="/admin/users/<%= u.id %>/status" method="POST" class="d-inline">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button type="submit" class="btn btn-sm btn-outline-warning"><%= u.status === 'suspended' ? '휴면 해제' : '휴면 처리' %></button>
+            </form>
+            <form action="/admin/users/<%= u.id %>/delete" method="POST" class="d-inline" data-confirm="삭제하시겠습니까?">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button type="submit" class="btn btn-sm btn-outline-danger">삭제</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <script src="/js/confirm-forms.js"></script>
+</div>
+<%- include('../partials/foot') %>

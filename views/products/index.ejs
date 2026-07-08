@@ -1,30 +1,43 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>상품 목록</title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
+<%- include('../partials/head', { title: '상품 목록' }) %>
 <body>
 <%- include('../partials/nav') %>
-<h1>상품 목록</h1>
-<% if (currentUser) { %>
-  <p><a href="/products/new">상품 등록</a> | <a href="/products/mine">내 상품 관리</a></p>
-<% } %>
-<form method="GET" action="/products">
-  <input type="text" name="q" placeholder="검색어" value="<%= q %>">
-  <input type="number" name="minPrice" placeholder="최소가격" value="<%= minPrice %>" min="0">
-  <input type="number" name="maxPrice" placeholder="최대가격" value="<%= maxPrice %>" min="0">
-  <button type="submit">검색</button>
-</form>
-<ul>
-  <% products.forEach(function (p) { %>
-    <li>
-      <a href="/products/<%= p.id %>"><%= p.title %></a>
-      - <%= p.price %>원 (판매자: <%= p.seller_username %>)
-    </li>
-  <% }) %>
-  <% if (products.length === 0) { %><li>등록된 상품이 없습니다.</li><% } %>
-</ul>
-</body>
-</html>
+<div class="container">
+  <h1>상품 목록</h1>
+  <% if (currentUser) { %>
+    <p>
+      <a class="btn btn-sm btn-outline-secondary" href="/products/new">상품 등록</a>
+      <a class="btn btn-sm btn-outline-secondary" href="/products/mine">내 상품 관리</a>
+    </p>
+  <% } %>
+  <form method="GET" action="/products" class="row g-2 mb-4">
+    <div class="col-auto">
+      <input type="text" name="q" class="form-control" placeholder="검색어" value="<%= q %>">
+    </div>
+    <div class="col-auto">
+      <input type="number" name="minPrice" class="form-control" placeholder="최소가격" value="<%= minPrice %>" min="0">
+    </div>
+    <div class="col-auto">
+      <input type="number" name="maxPrice" class="form-control" placeholder="최대가격" value="<%= maxPrice %>" min="0">
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary">검색</button>
+    </div>
+  </form>
+  <div class="row row-cols-1 row-cols-md-3 g-3">
+    <% products.forEach(function (p) { %>
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title"><a href="/products/<%= p.id %>" class="text-decoration-none"><%= p.title %></a></h5>
+            <p class="card-text">
+              <%= p.price %>원<br>
+              <small class="text-muted">판매자: <%= p.seller_username %></small>
+            </p>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+    <% if (products.length === 0) { %><p>등록된 상품이 없습니다.</p><% } %>
+  </div>
+</div>
+<%- include('../partials/foot') %>
