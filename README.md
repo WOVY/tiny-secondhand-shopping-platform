@@ -75,6 +75,16 @@ ngrok으로 외부 노출할 경우 `.env`의 `TRUST_PROXY=true`로 설정해야
 npm run dev
 ```
 
+### Smoke test
+
+```bash
+npm run smoke
+```
+
+별도 임시 DB/포트로 서버를 직접 띄운 뒤, 회원가입→로그인→상품등록→조회→로그아웃
+골든 패스와 CSRF/중복 아이디/관리자 인가 등 핵심 보안 동작을 자동으로 점검한다.
+자세한 내용은 [`docs/testing.md`](./docs/testing.md) 참고.
+
 ## 폴더 구조
 
 ```
