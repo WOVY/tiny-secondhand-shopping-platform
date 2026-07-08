@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>상품 목록</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%- include('../partials/nav') %>
+<h1>상품 목록</h1>
+<% if (currentUser) { %>
+  <p><a href="/products/new">상품 등록</a> | <a href="/products/mine">내 상품 관리</a></p>
+<% } %>
+<form method="GET" action="/products">
+  <input type="text" name="q" placeholder="검색어" value="<%= q %>">
+  <input type="number" name="minPrice" placeholder="최소가격" value="<%= minPrice %>" min="0">
+  <input type="number" name="maxPrice" placeholder="최대가격" value="<%= maxPrice %>" min="0">
+  <button type="submit">검색</button>
+</form>
+<ul>
+  <% products.forEach(function (p) { %>
+    <li>
+      <a href="/products/<%= p.id %>"><%= p.title %></a>
+      - <%= p.price %>원 (판매자: <%= p.seller_username %>)
+    </li>
+  <% }) %>
+  <% if (products.length === 0) { %><li>등록된 상품이 없습니다.</li><% } %>
+</ul>
+</body>
+</html>

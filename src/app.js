@@ -54,6 +54,7 @@ app.use((req, res, next) => {
 
 app.use(require('./routes/auth'));
 app.use(require('./routes/profile'));
+app.use(require('./routes/products'));
 
 app.get('/', (req, res) => {
   res.render('index');

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title><%= product.title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%- include('../partials/nav') %>
+<h1><%= product.title %></h1>
+<% if (product.status === 'blocked') { %><p class="errors">신고 누적으로 차단된 상품입니다 (본인에게만 표시).</p><% } %>
+<% if (product.image_path) { %><img src="<%= product.image_path %>" alt="상품 이미지" style="max-width:100%"><% } %>
+<p><%= product.description %></p>
+<p>가격: <%= product.price %>원</p>
+<p>판매자: <%= product.seller_username %></p>
+<% if (isOwner) { %>
+  <p><a href="/products/<%= product.id %>/edit">수정/삭제</a></p>
+<% } %>
+</body>
+</html>
