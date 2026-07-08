@@ -8,7 +8,12 @@ const router = express.Router();
 
 router.get('/chat', requireAuth, (req, res) => {
   const messages = messageModel.listByRoom('global');
-  res.render('chat/global', { messages });
+  const conversations = messageModel
+    .listConversationsForUser(req.session.userId)
+    .map((c) => ({ ...c, otherUser: userModel.findById(c.otherId) }))
+    .filter((c) => c.otherUser);
+
+  res.render('chat/global', { messages, conversations });
 });
 
 router.get('/chat/:userId', requireAuth, (req, res) => {
