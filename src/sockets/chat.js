@@ -18,7 +18,21 @@ function registerChatHandlers(io) {
 
     socket.join('global');
 
+    // 연결 시점 이후(메시지를 보내는 매 순간)에도 휴면 처리될 수 있으므로,
+    // 이미 열려 있는 소켓이라도 매 메시지마다 최신 상태를 다시 조회해서 확인한다.
+    // (연결 시점 검사만으로는, 신고 누적으로 세션 도중 휴면 처리된 사용자가
+    //  이미 맺어둔 소켓으로 계속 메시지를 보낼 수 있는 문제가 있었다.)
+    function isStillActive() {
+      const current = userModel.findById(userId);
+      if (!current || current.status === 'suspended') {
+        socket.disconnect(true);
+        return false;
+      }
+      return true;
+    }
+
     socket.on('chat:global:message', (content) => {
+      if (!isStillActive()) return;
       if (typeof content !== 'string') return;
       const trimmed = content.trim().slice(0, MAX_MESSAGE_LENGTH);
       if (!trimmed) return;
@@ -34,12 +48,14 @@ function registerChatHandlers(io) {
     });
 
     socket.on('chat:dm:join', (otherUserId) => {
+      if (!isStillActive()) return;
       const otherId = Number(otherUserId);
       if (!otherId || otherId === userId || !userModel.findById(otherId)) return;
       socket.join(roomKeyForUsers(userId, otherId));
     });
 
     socket.on('chat:dm:message', (payload) => {
+      if (!isStillActive()) return;
       const { toUserId, content } = payload || {};
       const otherId = Number(toUserId);
       if (!otherId || otherId === userId || typeof content !== 'string') return;
