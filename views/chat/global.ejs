@@ -20,6 +20,9 @@
   <% if (conversations.length === 0) { %><li>아직 1:1 대화가 없습니다.</li><% } %>
 </ul>
 
+<hr>
+
+<h2>전체 채팅 메시지</h2>
 <ul id="messages">
   <% messages.forEach(function (m) { %>
     <li><strong><%= m.sender_username %>:</strong> <%= m.content %></li>
