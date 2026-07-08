@@ -22,6 +22,7 @@
 | 16 | 인가/IDOR | 관리자 라우트는 role 서버측 재검증 (숨김 아님) | `src/middleware/admin.js` | ✅ |
 | 17 | Mass Assignment | 회원가입/프로필 요청으로 role/balance 변경 불가 | 모델이 화이트리스트 컬럼만 INSERT/UPDATE | ✅ |
 | 18 | 소켓 인증 | 미인증/휴면 소켓 연결 즉시 종료 | `src/sockets/chat.js` | ✅ |
+| 18-1 | 소켓 인증 | 연결 이후 휴면 처리되어도 매 메시지마다 재확인해 즉시 종료 | `isStillActive()` (`src/sockets/chat.js`, 이슈 #11에서 발견/수정) | ✅ |
 | 19 | 소켓 인가 | 1:1 채팅방은 참가자만 접근 (room 키를 서버가 계산) | `src/utils/chatRoom.js` | ✅ |
 | 20 | 신고 남용 방지 | 동일 대상 중복 신고 방지 (사전 체크 + DB UNIQUE) | `reports` 테이블 UNIQUE 제약 | ✅ |
 | 21 | 데이터 무결성 | 송금 시 잔액 확인+차감+입금+기록이 원자적 트랜잭션 | `db.transaction()` (`src/models/transaction.js`) | ✅ (동시성 테스트로 검증) |
