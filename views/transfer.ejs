@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>송금</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%- include('partials/nav') %>
+<h1>송금</h1>
+<p>내 잔액: <%= balance %>P</p>
+<% if (success) { %><p class="success">송금이 완료되었습니다.</p><% } %>
+<% if (errors && errors.length) { %>
+  <ul class="errors">
+    <% errors.forEach(function (e) { %><li><%= e.msg %></li><% }) %>
+  </ul>
+<% } %>
+<form method="POST" action="/transfer">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <label>받는 사람 아이디 <input type="text" name="toUsername" value="<%= values.toUsername || '' %>" required></label><br>
+  <label>금액(P) <input type="number" name="amount" min="1" value="<%= values.amount || '' %>" required></label><br>
+  <button type="submit">송금</button>
+</form>
+
+<h2>거래 내역</h2>
+<ul>
+  <% transactions.forEach(function (t) { %>
+    <li>
+      <%= t.created_at %> -
+      <% if (t.from_user_id === currentUser.id) { %>
+        <%= t.to_username %>님에게 <%= t.amount %>P 송금
+      <% } else { %>
+        <%= t.from_username %>님에게서 <%= t.amount %>P 수신
+      <% } %>
+    </li>
+  <% }) %>
+  <% if (transactions.length === 0) { %><li>거래 내역이 없습니다.</li><% } %>
+</ul>
+</body>
+</html>
