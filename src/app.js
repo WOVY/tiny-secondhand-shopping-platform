@@ -43,6 +43,7 @@ app.use(require('./routes/auth'));
 app.use(require('./routes/profile'));
 app.use(require('./routes/products'));
 app.use(require('./routes/report'));
+app.use(require('./routes/chat'));
 
 app.get('/', (req, res) => {
   res.render('index');

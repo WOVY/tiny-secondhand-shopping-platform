@@ -17,7 +17,8 @@
   <p><a href="/products/<%= product.id %>/edit">수정/삭제</a></p>
 <% } else if (currentUser) { %>
   <p>
-    <a href="/report?type=product&id=<%= product.id %>">상품 신고</a>
+    <a href="/chat/<%= product.seller_id %>">판매자와 채팅</a>
+    | <a href="/report?type=product&id=<%= product.id %>">상품 신고</a>
     | <a href="/report?type=user&id=<%= product.seller_id %>">판매자 신고</a>
   </p>
 <% } %>

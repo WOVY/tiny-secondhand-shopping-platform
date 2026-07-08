@@ -2,6 +2,7 @@
   <a href="/">홈</a>
   | <a href="/products">상품</a>
   <% if (currentUser) { %>
+    | <a href="/chat">전체채팅</a>
     | <%= currentUser.username %>님
     | <a href="/profile">마이페이지</a>
     | <form action="/logout" method="POST" style="display:inline">
