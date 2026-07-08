@@ -3,9 +3,9 @@ const express = require('express');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const { doubleCsrf } = require('csrf-csrf');
 
 const config = require('./config/env');
+const { doubleCsrfProtection, generateToken } = require('./middleware/csrf');
 const userModel = require('./models/user');
 
 const app = express();
@@ -33,22 +33,15 @@ app.use(
   })
 );
 
-const { doubleCsrfProtection, generateCsrfToken } = doubleCsrf({
-  getSecret: () => config.sessionSecret,
-  getSessionIdentifier: (req) => req.session.id,
-  cookieName: 'csrf-token',
-  cookieOptions: {
-    sameSite: 'strict',
-    path: '/',
-    secure: config.isProduction,
-    httpOnly: true,
-  },
-  getCsrfTokenFromRequest: (req) => req.body._csrf,
-});
-
 app.use(doubleCsrfProtection);
 app.use((req, res, next) => {
-  res.locals.csrfToken = generateCsrfToken(req, res);
+  // 로그인/로그아웃 시 세션이 재발급되면 기존 csrf-token 쿠키는 더 이상 유효하지 않으므로
+  // 검증 실패시 새 세션 기준으로 토큰을 다시 발급한다.
+  try {
+    res.locals.csrfToken = generateToken(req, res);
+  } catch (err) {
+    res.locals.csrfToken = generateToken(req, res, true);
+  }
   next();
 });
 
