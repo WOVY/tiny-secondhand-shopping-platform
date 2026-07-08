@@ -13,3 +13,11 @@ body {
 .success {
   color: #0a7d2c;
 }
+
+.inline-form {
+  display: inline;
+}
+
+.product-image {
+  max-width: 100%;
+}

@@ -19,11 +19,11 @@
       <td><%= u.status %></td>
       <td><%= u.balance %></td>
       <td>
-        <form action="/admin/users/<%= u.id %>/status" method="POST" style="display:inline">
+        <form action="/admin/users/<%= u.id %>/status" method="POST" class="inline-form">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <button type="submit"><%= u.status === 'suspended' ? '휴면 해제' : '휴면 처리' %></button>
         </form>
-        <form action="/admin/users/<%= u.id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('삭제하시겠습니까?');">
+        <form action="/admin/users/<%= u.id %>/delete" method="POST" class="inline-form" data-confirm="삭제하시겠습니까?">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <button type="submit">삭제</button>
         </form>
@@ -31,5 +31,6 @@
     </tr>
   <% }) %>
 </table>
+<script src="/js/confirm-forms.js"></script>
 </body>
 </html>

@@ -7,7 +7,7 @@
     <% if (currentUser.role === 'admin') { %>| <a href="/admin">관리자</a><% } %>
     | <%= currentUser.username %>님
     | <a href="/profile">마이페이지</a>
-    | <form action="/logout" method="POST" style="display:inline">
+    | <form action="/logout" method="POST" class="inline-form">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button type="submit">로그아웃</button>
       </form>
