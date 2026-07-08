@@ -2,7 +2,6 @@ const express = require('express');
 const { body, query, validationResult } = require('express-validator');
 const productModel = require('../models/product');
 const { requireAuth } = require('../middleware/auth');
-const { handleImageUpload } = require('../middleware/upload');
 
 const router = express.Router();
 
@@ -53,7 +52,6 @@ router.get('/products/new', requireAuth, (req, res) => {
 router.post(
   '/products/new',
   requireAuth,
-  handleImageUpload,
   productValidators,
   (req, res) => {
     const errors = collectErrors(req);
@@ -101,7 +99,6 @@ router.get('/products/:id/edit', requireAuth, (req, res) => {
 router.post(
   '/products/:id/edit',
   requireAuth,
-  handleImageUpload,
   productValidators,
   (req, res) => {
     const product = productModel.findById(req.params.id);
