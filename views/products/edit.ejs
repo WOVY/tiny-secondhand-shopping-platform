@@ -22,9 +22,10 @@
   <button type="submit">저장</button>
 </form>
 
-<form method="POST" action="/products/<%= product.id %>/delete" onsubmit="return confirm('삭제하시겠습니까?');">
+<form method="POST" action="/products/<%= product.id %>/delete" data-confirm="삭제하시겠습니까?">
   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
   <button type="submit">삭제</button>
 </form>
+<script src="/js/confirm-forms.js"></script>
 </body>
 </html>
