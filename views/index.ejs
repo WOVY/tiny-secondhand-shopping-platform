@@ -6,7 +6,12 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <h1>Tiny Second-hand Shopping Platform</h1>
-  <p>준비 중입니다.</p>
+<%- include('partials/nav') %>
+<h1>Tiny Second-hand Shopping Platform</h1>
+<% if (currentUser) { %>
+  <p>환영합니다, <%= currentUser.username %>님. 상품 목록 기능은 준비 중입니다.</p>
+<% } else { %>
+  <p>중고거래를 시작하려면 로그인하거나 회원가입하세요.</p>
+<% } %>
 </body>
 </html>
