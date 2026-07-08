@@ -47,6 +47,16 @@ function listBySeller(sellerId) {
     .all(sellerId);
 }
 
+function listAll() {
+  return db
+    .prepare(
+      `SELECT products.*, users.username AS seller_username
+       FROM products JOIN users ON users.id = products.seller_id
+       ORDER BY products.created_at DESC`
+    )
+    .all();
+}
+
 function create({ title, description, price, sellerId, imagePath }) {
   const result = db
     .prepare(
@@ -84,6 +94,7 @@ module.exports = {
   findById,
   findDetailById,
   listBySeller,
+  listAll,
   create,
   update,
   remove,

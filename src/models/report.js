@@ -26,8 +26,18 @@ function listUnresolved() {
   return db.prepare('SELECT * FROM reports WHERE resolved = 0 ORDER BY created_at DESC').all();
 }
 
+function listAll() {
+  return db
+    .prepare(
+      `SELECT reports.*, users.username AS reporter_username
+       FROM reports JOIN users ON users.id = reports.reporter_id
+       ORDER BY reports.resolved ASC, reports.created_at DESC`
+    )
+    .all();
+}
+
 function resolve(id) {
   db.prepare('UPDATE reports SET resolved = 1 WHERE id = ?').run(id);
 }
 
-module.exports = { countForTarget, hasReported, create, listUnresolved, resolve };
+module.exports = { countForTarget, hasReported, create, listUnresolved, listAll, resolve };
