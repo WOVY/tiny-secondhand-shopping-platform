@@ -44,6 +44,7 @@ app.use(require('./routes/profile'));
 app.use(require('./routes/products'));
 app.use(require('./routes/report'));
 app.use(require('./routes/chat'));
+app.use(require('./routes/transfer'));
 
 app.get('/', (req, res) => {
   res.render('index');

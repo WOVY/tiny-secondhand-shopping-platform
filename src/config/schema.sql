@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS users (
   username TEXT NOT NULL UNIQUE,
   password_hash TEXT NOT NULL,
   bio TEXT NOT NULL DEFAULT '',
-  balance INTEGER NOT NULL DEFAULT 0,
+  balance INTEGER NOT NULL DEFAULT 0 CHECK (balance >= 0),
   role TEXT NOT NULL DEFAULT 'user' CHECK (role IN ('user', 'admin')),
   status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'suspended')),
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
